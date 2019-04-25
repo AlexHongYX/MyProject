@@ -43,21 +43,12 @@
       <artifactId>spring-web</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-oxm</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-tx</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
 
+    <!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-      <version>${spring.version}</version>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.2.2</version>
     </dependency>
 
     <dependency>
@@ -65,21 +56,10 @@
       <artifactId>spring-webmvc</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-aop</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-context-support</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
+      <artifactId>spring-jdbc</artifactId>
       <version>${spring.version}</version>
     </dependency>
     <!-- mybatis核心包 -->
@@ -94,81 +74,15 @@
       <artifactId>mybatis-spring</artifactId>
       <version>1.2.2</version>
     </dependency>
-    <!-- 导入java ee jar 包 -->
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>7.0</version>
-    </dependency>
-    <!-- 导入Mysql数据库链接jar包 -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>druid</artifactId>
-      <version>1.1.6</version>
-    </dependency>
-    <!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
-    <dependency>
-      <groupId>commons-dbcp</groupId>
-      <artifactId>commons-dbcp</artifactId>
-      <version>1.2.2</version>
-    </dependency>
-    <!-- JSTL标签类 -->
-    <dependency>
-      <groupId>jstl</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-    </dependency>
-    <!-- 日志文件管理包 -->
-    <!-- log start -->
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>${log4j.version}</version>
-    </dependency>
 
+    <!--&lt;!&ndash; 日志文件管理包 &ndash;&gt;-->
+    <!--&lt;!&ndash; log start &ndash;&gt;-->
+    <!--<dependency>-->
+      <!--<groupId>log4j</groupId>-->
+      <!--<artifactId>log4j</artifactId>-->
+      <!--<version>${log4j.version}</version>-->
+    <!--</dependency>-->
 
-    <!-- 格式化对象，方便输出日志 -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-      <version>1.1.41</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-    <!-- log end -->
-    <!-- 映入JSON -->
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-mapper-asl</artifactId>
-      <version>1.9.13</version>
-    </dependency>
-    <!-- 上传组件包 -->
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>1.3.1</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.4</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.9</version>
-    </dependency>
     <!-- 导入Mysql数据库链接jar包 -->
     <dependency>
       <groupId>mysql</groupId>
@@ -176,19 +90,13 @@
       <version>5.1.30</version>
     </dependency>
     <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.3.1</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
     </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>2.4.2</version>
-    </dependency>
+
   </dependencies>
 
-
-
-
-
 </project>
+
+

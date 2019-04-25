@@ -7,12 +7,14 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+    <!--注解的扫描路径-->
+    <context:component-scan base-package="com.fehead.**"/>
+
     <!--导入jdbc配置文件，方便在之后的配置文件中使用spEL表达式访问jdbc.properties中的内容-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
-    <!--注解的扫描路径-->
-    <context:component-scan base-package="com.*"/>
 
     <!--配置连接池-->
+
     <bean id="dateSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="username" value="${jdbc_username}"/>
         <property name="password" value="${jdbc_password}"/>
@@ -20,12 +22,22 @@
         <property name="driverClassName" value="${jdbc_driverClassName}"/>
     </bean>
 
-    <!--在Spring中配置Mybatis的sqlsessionfactory-->
-    <bean id="sqlSessionFactory"
-        class="org.mybatis.spring.SqlSessionFactoryBean"
-        p:dataSource-ref="dateSource"
-        p:configLocation="classpath:mybatis-config.xml"
-        p:mapperLocations="classpath:/mapping/*.xml"/>
+
+
+        <!-- 配置sqlSessionFactory，SqlSessionFactoryBean是用来产生sqlSessionFactory的 -->
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+            <!-- 加载mybatis的全局配置文件，放在classpath下的mybatis文件夹中 -->
+            <property name="configLocation" value="classpath:mybatis-config.xml" />
+            <!-- 加载数据源，使用上面配置好的数据源 -->
+            <property name="dataSource" ref="dateSource" />
+            <property name="mapperLocations" value="classpath:/mapping/*.xml"/>
+        </bean>
+
+        <!--p:dataSource-ref="dateSource"-->
+        <!--p:configLocation="classpath:mybatis-config.xml"-->
+        <!--p:mapperLocations="classpath:/mapping/*.xml"/>-->
+
+
 
     <!--由spring创建dao的实现类对象，即mapper对象，从上面的session工厂中，自动创建出所有mapper包中的mapper实现类对象
         会扫描Dao中所有的.xml文件-->
@@ -33,10 +45,12 @@
         p:basePackage="com.fehead.Dao"
         p:sqlSessionFactoryBeanName="sqlSessionFactory"/>
 
+
+
     <!--事务管理器，用于注解注入事务-->
-    <bean id="transactionManager"
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-        p:dataSource-ref="dateSource"/>
+    <!--<bean id="transactionManager"-->
+        <!--class="org.springframework.jdbc.datasource.DataSourceTransactionManager"-->
+        <!--p:dataSource-ref="dateSource"/>-->
 
 
 </beans>

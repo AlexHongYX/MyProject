@@ -7,9 +7,7 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <!--注解的扫描路径-->
-    <context:component-scan base-package="com.fehead.**"/>
-
+    <!--配置整合mybatis过程-->
     <!--导入jdbc配置文件，方便在之后的配置文件中使用spEL表达式访问jdbc.properties中的内容-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
@@ -30,7 +28,7 @@
             <property name="configLocation" value="classpath:mybatis-config.xml" />
             <!-- 加载数据源，使用上面配置好的数据源 -->
             <property name="dataSource" ref="dateSource" />
-            <property name="mapperLocations" value="classpath:/mapping/*.xml"/>
+            <property name="mapperLocations" value="classpath:mapping/*.xml"/>
         </bean>
 
         <!--p:dataSource-ref="dateSource"-->
@@ -40,10 +38,17 @@
 
 
     <!--由spring创建dao的实现类对象，即mapper对象，从上面的session工厂中，自动创建出所有mapper包中的mapper实现类对象
-        会扫描Dao中所有的.xml文件-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
-        p:basePackage="com.fehead.Dao"
-        p:sqlSessionFactoryBeanName="sqlSessionFactory"/>
+        相当于动态代理的创建了dao层接口的实例化对象，在service层中使用@Autowired就可以用-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.fehead.Dao"/>
+    </bean>
+
+
+
+          <!--p:basePackage="com.fehead.Dao"-->
+        <!--p:sqlSessionFactoryBeanName="sqlSessionFactory"/>-->
 
 
 

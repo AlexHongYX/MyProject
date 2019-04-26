@@ -1,10 +1,15 @@
 package com.fehead.Service;
 
-import com.fehead.bean.Location;
 
-import java.util.List;
+import java.util.Map;
 
 public interface SearchService {
 
-    public List<Integer> searchClassroomByMessage(String build,String buildnumber,int day,int time,int buildlevel,int start,int end);
+    public Map<Integer,String> searchClassroomByMessage(String build, String buildnumber, int buildlevel, int week, int day, int time);
+
+    public String getBuild(String build,String buildnumber);
+
+    public String getDay(int time,int day);
+
+    public String[] getWeeks(int week);
 }

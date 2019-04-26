@@ -2,6 +2,7 @@ package com.fehead.bean;
 
 public class Location {
 
+    private int buildlevel_classroom;
     private int buildlevel;
     private int classroom;
 
@@ -19,5 +20,13 @@ public class Location {
 
     public void setClassroom(int classroom) {
         this.classroom = classroom;
+    }
+
+    public void setBuildlevel_classroom(int buildlevel_classroom) {
+        this.buildlevel_classroom = buildlevel_classroom;
+    }
+
+    public int getBuildlevel_classroom() {
+        return buildlevel_classroom;
     }
 }

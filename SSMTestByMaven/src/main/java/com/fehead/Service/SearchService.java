@@ -1,6 +1,7 @@
 package com.fehead.Service;
 
 
+import java.util.List;
 import java.util.Map;
 
 public interface SearchService {
@@ -11,5 +12,11 @@ public interface SearchService {
 
     public String getDay(int time,int day);
 
-    public String[] getWeeks(int week);
+    public List<String> getWeeks(int week);
+
+    public List<String> getLocation(String week_id,String day_time_id,String build_buildnumber_id);
+
+    public String getClassroom(int buildlevel,String buildlevel_classrooms_id);
+
+    public List<String> queryClassroom(int week,String day_time_id,String build_buildnumber_id,int buildlevel);
 }

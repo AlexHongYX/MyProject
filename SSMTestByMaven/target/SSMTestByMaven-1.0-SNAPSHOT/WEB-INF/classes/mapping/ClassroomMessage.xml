@@ -5,4 +5,9 @@
 
 <mapper namespace="com.fehead.Dao.ClassroomMessageDao">
 
+    <select id="getLocation" parameterType="com.fehead.bean.ClassroomMessage" resultType="java.lang.String">
+        SELECT buildlevel_classroom from classroom_last1 WHERE week_start_end_id = #{week_start_end_id}
+        AND  day_time_id = #{day_time_id} AND build_buildnumber_id = #{build_buildnumber_id}
+    </select>
+
 </mapper>

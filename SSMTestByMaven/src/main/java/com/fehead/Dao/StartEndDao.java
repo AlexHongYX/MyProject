@@ -1,7 +1,9 @@
 package com.fehead.Dao;
 
 
+import java.util.List;
+
 public interface StartEndDao {
 
-    public String[] getWeeks(int week);
+    public List<String> getWeeks(int week);
 }

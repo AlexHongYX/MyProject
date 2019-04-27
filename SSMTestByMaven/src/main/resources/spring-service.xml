@@ -10,6 +10,9 @@
     <!--注解的扫描路径-->
     <context:component-scan base-package="com.fehead.Service"/>
 
-
+    <!--&lt;!&ndash;事务管理器，用于注解注入事务&ndash;&gt;-->
+    <!--<bean id="transactionManager"-->
+    <!--class="org.springframework.jdbc.datasource.DataSourceTransactionManager"-->
+    <!--p:dataSource-ref="dateSource"/>-->
 
 </beans>

@@ -1,0 +1,46 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- 配置整合MyBatis过程 -->
+    <!-- 1、配置数据库相关参数properties的属性：${xxx} -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!-- 2、配置dbcp数据库连接池 -->
+    <bean id="dateSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <!-- 配置连接池属性 -->
+        <property name="username" value="${jdbc_username}"/>
+        <property name="password" value="${jdbc_password}"/>
+        <property name="url" value="${jdbc_url}"/>
+        <property name="driverClassName" value="${jdbc_driverClassName}"/>
+        <!-- 配置dbcp连接池的私有属性-->
+
+    </bean>
+
+    <!-- 3、配置SqlSessionFactory对象-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入数据库连接池-->
+        <property name="dataSource" ref="dateSource" />
+        <!-- 配置MyBatis全局配置文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <!-- 扫描bean包，可以再mapper中的.xml文件中使用别名（不用写全称）——不建议这样使用
+            <property name="typeAliasesPackage" value="com.fehead.bean"/>
+        -->
+        <!-- 扫描sql配置文件:mapper需要的xml文件-->
+        <property name="mapperLocations" value="classpath:mapper/SeckillDao.xml"/>
+    </bean>
+
+    <!-- 4、配置扫描Dao接口包，动态实现Dao接口，并注入到spring容器中-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 注入sqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- 给出需要扫描Dao接口的包-->
+        <property name="basePackage" value="com.fehead.dao"/>
+    </bean>
+
+</beans>

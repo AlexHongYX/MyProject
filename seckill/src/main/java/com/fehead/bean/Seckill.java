@@ -4,19 +4,19 @@ import java.util.Date;
 
 public class Seckill {
 
-    private long seckill_id;
+    private long seckillId;
     private String name;
     private int number;
-    private Date start_time;
-    private Date end_time;
-    private Date create_time;
+    private Date startTime;
+    private Date endTime;
+    private Date createTime;
 
-    public long getSeckill_id() {
-        return seckill_id;
+    public long getSeckillId() {
+        return seckillId;
     }
 
-    public void setSeckill_id(long seckill_id) {
-        this.seckill_id = seckill_id;
+    public void setSeckillId(long seckillId) {
+        this.seckillId = seckillId;
     }
 
     public String getName() {
@@ -35,39 +35,39 @@ public class Seckill {
         this.number = number;
     }
 
-    public Date getStart_time() {
-        return start_time;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setStart_time(Date start_time) {
-        this.start_time = start_time;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getEnd_time() {
-        return end_time;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setEnd_time(Date end_time) {
-        this.end_time = end_time;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
     public String toString() {
         return "Seckill{" +
-                "seckill_id=" + seckill_id +
+                "seckillId=" + seckillId +
                 ", name='" + name + '\'' +
                 ", number=" + number +
-                ", start_time=" + start_time +
-                ", end_time=" + end_time +
-                ", create_time=" + create_time +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", createTime=" + createTime +
                 '}';
     }
 }

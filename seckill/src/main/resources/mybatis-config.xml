@@ -14,6 +14,7 @@
         <setting name="useColumnLabel" value="true"/>
         <!--
             MyBatis开启驼峰自动命名转换：Table(create_time) -> bean(createTime)
+            如果设置了驼峰式命名，Java必须按照Java的格式(xxxXxx)，数据库中的字段必须按照数据库的格式(xxx_xx)
         -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>

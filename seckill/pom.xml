@@ -20,13 +20,13 @@
   </properties>
 
   <dependencies>
+    <!-- junit使用4.8版本，不要使用4.11版本-->
     <dependency>
-      <!-- 使用junit4 -->
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
+      <version>4.8</version>
     </dependency>
+
 
     <!--补全项目依赖-->
     <!--1、日志。java日志：slf4j，log4j，logback，common_logging
@@ -143,24 +143,6 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>4.0.2.RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 

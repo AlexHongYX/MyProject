@@ -4,36 +4,28 @@ import java.util.Date;
 
 public class SuccessKilled {
 
-    private long seckill_id;
-    private long user_phone;
+    private long seckillId;
+    private long userPhone;
     private int state;
-    private Date create_time;
+    private Date createTime;
 
     //多对一关系
     private Seckill seckill;
 
-    public Seckill getSeckill() {
-        return seckill;
+    public long getSeckillId() {
+        return seckillId;
     }
 
-    public void setSeckill(Seckill seckill) {
-        this.seckill = seckill;
+    public void setSeckillId(long seckillId) {
+        this.seckillId = seckillId;
     }
 
-    public long getSeckill_id() {
-        return seckill_id;
+    public long getUserPhone() {
+        return userPhone;
     }
 
-    public void setSeckill_id(long seckill_id) {
-        this.seckill_id = seckill_id;
-    }
-
-    public long getUser_phone() {
-        return user_phone;
-    }
-
-    public void setUser_phone(long user_phone) {
-        this.user_phone = user_phone;
+    public void setUserPhone(long userPhone) {
+        this.userPhone = userPhone;
     }
 
     public int getState() {
@@ -44,21 +36,30 @@ public class SuccessKilled {
         this.state = state;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Seckill getSeckill() {
+        return seckill;
+    }
+
+    public void setSeckill(Seckill seckill) {
+        this.seckill = seckill;
     }
 
     @Override
     public String toString() {
         return "SuccessKilled{" +
-                "seckill_id=" + seckill_id +
-                ", user_phone=" + user_phone +
+                "seckillId=" + seckillId +
+                ", userPhone=" + userPhone +
                 ", state=" + state +
-                ", create_time=" + create_time +
+                ", createTime=" + createTime +
+                ", seckill=" + seckill +
                 '}';
     }
 }

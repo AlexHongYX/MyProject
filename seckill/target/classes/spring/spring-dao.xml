@@ -12,7 +12,7 @@
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <!-- 2、配置dbcp数据库连接池 -->
-    <bean id="dateSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <!-- 配置连接池属性 -->
         <property name="username" value="${jdbc_username}"/>
         <property name="password" value="${jdbc_password}"/>
@@ -25,7 +25,7 @@
     <!-- 3、配置SqlSessionFactory对象-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 注入数据库连接池-->
-        <property name="dataSource" ref="dateSource" />
+        <property name="dataSource" ref="dataSource" />
         <!-- 配置MyBatis全局配置文件-->
         <property name="configLocation" value="classpath:mybatis-config.xml" />
         <!-- 扫描bean包，可以再mapper中的.xml文件中使用别名（不用写全称）——不建议这样使用

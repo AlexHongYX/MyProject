@@ -75,15 +75,19 @@ public class SearchController {
                     returnJson.setClassroom(buildlevel*10+classrooms.get(i));
                     System.out.println(buildlevel*10+classrooms.get(i));
                 }
-
                 returnJson.setUsage("true");
-
+                returnJsons.add(returnJson); //添加returnJsons
             }
         }
         long endTime=System.currentTimeMillis(); //获取结束时间
         System.out.println("startTime="+startTime+";endTime="+endTime+";runtime:"+(endTime-startTime)+"ms");
+        System.out.println("Return json:");
+        for(ReturnJson returnJson:returnJsons){
+            System.out.println(returnJson);
+        }
         return returnJsons;
     }
+
 
     @RequestMapping("index")
     public String getIndex(){

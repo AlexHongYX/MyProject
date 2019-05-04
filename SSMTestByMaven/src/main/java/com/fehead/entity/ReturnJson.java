@@ -20,4 +20,12 @@ public class ReturnJson {
     public String getUsage() {
         return usage;
     }
+
+    @Override
+    public String toString() {
+        return "ReturnJson{" +
+                "classroom='" + classroom + '\'' +
+                ", usage='" + usage + '\'' +
+                '}';
+    }
 }

@@ -34,11 +34,11 @@ public class SeckillController {
     private SeckillService seckillService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public String list(ModelAndView model){
+    public String list(Model model){
         //获取列表页
         List<Seckill> list = seckillService.getSeckillList();
 
-//        model.addAttribute("list",list);
+        model.addAttribute("list",list);
         //list.jsp + model = ModelAndView
         return "list";  //  /WEB-INF/list.jsp
     }
@@ -61,7 +61,7 @@ public class SeckillController {
                 method = RequestMethod.POST,
                 produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public SeckillResult<Exposer> exposer(Long seckillId){
+    public SeckillResult<Exposer> exposer(@PathVariable("seckillId") Long seckillId){
         SeckillResult<Exposer> result;
         try {
             Exposer exposer  = seckillService.exportSeckillUrl(seckillId);
@@ -87,19 +87,22 @@ public class SeckillController {
         try {
             SeckillExecution execution = seckillService.executeSeckill(seckillId,phone,md5);
             return new SeckillResult<SeckillExecution>(true,execution);
+            //即便是报错也需要返回true——可以将错误的信息返回至前端页面
         }catch (RepeatKillException e){
             SeckillExecution execution = new SeckillExecution(seckillId,SeckillStatEnum.REPEAT_KILL);
-            return new SeckillResult<SeckillExecution>(false,execution);
+            return new SeckillResult<SeckillExecution>(true,execution);
         }catch (SeckillCloseException e){
             SeckillExecution execution = new SeckillExecution(seckillId,SeckillStatEnum.END);
-            return new SeckillResult<SeckillExecution>(false,execution);
+            return new SeckillResult<SeckillExecution>(true,execution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             SeckillExecution execution = new SeckillExecution(seckillId,SeckillStatEnum.INNER_ERROR);
-            return new SeckillResult<SeckillExecution>(false,execution);
+            return new SeckillResult<SeckillExecution>(true,execution);
         }
     }
 
+    @RequestMapping(value = "/time/now",method = RequestMethod.GET)
+    @ResponseBody
     public SeckillResult<Long> time(){
         Date now = new Date();
         return new SeckillResult<Long>(true,now.getTime());

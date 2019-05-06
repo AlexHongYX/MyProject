@@ -52,4 +52,14 @@ public interface SeckillService {
         throws SeckillException, SeckillCloseException, RepeatKillException;
     //抛出SeckillCloseException, RepeatKillException异常需要明确告诉用户或接口使用者，秒杀关闭异常/重复秒杀异常
     //而抛出SeckillException异常只需要告诉用户秒杀存在异常，秒杀失败
+
+    /**
+     * 执行秒杀操作by 存储过程
+     * @param seckillId
+     * @param userPhone
+     * @param md5
+     * @return
+     */
+    SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5)
+            throws SeckillException, SeckillCloseException, RepeatKillException;
 }

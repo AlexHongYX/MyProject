@@ -27,7 +27,9 @@ public class UserServiceImpl implements UserService {
     public UserModel getUserById(Integer id) {
         //调用userInfoMapper获取对应的用户dataobject
         UserInfo userInfo = userInfoMapper.selectByPrimaryKey(id);
-        return null;
+        UserPassword userPassword = userPasswordMapper.selectByPrimaryKey(id);
+
+        return convertFromDataObject(userInfo,userPassword);
     }
 
     private UserModel convertFromDataObject(UserInfo userInfo, UserPassword userPassword){

@@ -18,6 +18,9 @@ import java.util.Map;
  */
 public class BaseController {
 
+    //声明一个常量用于@RequestMapping中consumes的返回
+    public static final String CONTENT_TYPE_FORWARD="application/x-www-form-urlencoded";
+
     //定义exceptionHandler解决未被controller层吸收的exception
     @ExceptionHandler(Exception.class)
     //设置返回结果200，不会返回其他结果（404、 500...）

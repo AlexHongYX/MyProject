@@ -7,8 +7,9 @@
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!-- 数据库链接地址账号密码-->
+        <!-- 需要注意的是在url地址处加上?useUnicode=true&amp;characterEncoding=utf8——避免乱码-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/seckillplus"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/seckillplus?useUnicode=true&amp;characterEncoding=utf8"
                         userId="root"
                         password="8023hyx1999hyx">
         </jdbcConnection>
@@ -34,10 +35,26 @@
         </javaClientGenerator>
 
         <!-- 生成对应表及类名，将enablexxxxx属性将dataObject层中的xxxforExample去掉-->
-        <table tableName="user_info" domainObjectName="UserInfo" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="user_password" domainObjectName="UserPassword" enableCountByExample="false"
+        <!--1、User-->
+        <!--<table tableName="user_info" domainObjectName="UserInfo" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--<table tableName="user_password" domainObjectName="UserPassword" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--2、item-->
+        <!--<table tableName="item" domainObjectName="ItemInfo" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--<table tableName="item_stock" domainObjectName="ItemStock" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--3、order-->
+        <!--<table tableName="order_info" domainObjectName="OrderInfo" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--4、sequence-->
+        <table tableName="sequence_info" domainObjectName="SequenceInfo" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>

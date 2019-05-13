@@ -5,15 +5,14 @@ import com.fehead.error.BussinessException;
 import com.fehead.response.CommonReturnType;
 import com.fehead.service.ItemService;
 import com.fehead.service.model.ItemModel;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -83,6 +82,19 @@ public class ItemController extends BaseController {
         }
         ItemVO itemVO = new ItemVO();
         BeanUtils.copyProperties(itemModel,itemVO);
+        //将ItemModel中的PromoModel中的部分属性赋值给ItemVO
+        if(itemModel.getPromoModel()!=null){
+            //有正在进行或即将进行的秒杀活动（promoModel要是等于null，在Service层判断过了，要么没有，要么已结束）
+            itemVO.setPromoStatus(itemModel.getPromoModel().getStatus());
+            itemVO.setPromoId(itemModel.getPromoModel().getId());
+            //使用DateTime->格式化的String（只取DateTime中的部分属性，否则会给前端返回好多乱七八糟的东西，前端显示不了）
+            itemVO.setPromoStartDate(itemModel.getPromoModel().getStartDate().toString(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")));
+            itemVO.setPromoPrice(itemModel.getPromoModel().getPromoItemPrice());
+        }else {
+            itemVO.setPromoStatus(0);
+        }
+
+        //返回带有状态的itemVO
         return itemVO;
     }
 

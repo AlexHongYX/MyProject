@@ -34,17 +34,20 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "/createorder",method = {RequestMethod.POST},consumes = {CONTENT_TYPE_FORWARD})
     @ResponseBody
     public CommonReturnType createOrder(@RequestParam(name = "itemId")Integer itemId,
-                                        @RequestParam(name = "amount")Integer amount) throws BussinessException {
+                                        @RequestParam(name = "amount")Integer amount,
+                                        @RequestParam(name = "promoId",required = false)Integer promoId) throws BussinessException {
+                                        //正是由于这里将promoId的required属性设置为false（默认为false），Service层才会对promoId是否为null进行判断
 
         Boolean isLogin = (Boolean) httpServletRequest.getSession().getAttribute("IS_LOGIN");
-        if (isLogin==null||!isLogin.booleanValue()){
+//        if (isLogin==null||!isLogin.booleanValue()){
+        if (isLogin==null||!isLogin){
             throw new BussinessException(EmBusinessError.USER_NOT_LOGIN);
         }
         //获取用户登录信息
         UserModel userModel = (UserModel) httpServletRequest.getSession().getAttribute("LOGIN_USER");
 
         //通过orderService返回orderModel
-        OrderModel orderModel = orderService.createOrder(userModel.getId(),itemId,amount);
+        OrderModel orderModel = orderService.createOrder(userModel.getId(),itemId,promoId,amount);
 
         return CommonReturnType.create(null);
     }

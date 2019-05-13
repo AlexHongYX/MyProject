@@ -54,7 +54,11 @@
                <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
         <!--4、sequence-->
-        <table tableName="sequence_info" domainObjectName="SequenceInfo" enableCountByExample="false"
+        <!--<table tableName="sequence_info" domainObjectName="SequenceInfo" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--5、promo-->
+        <table tableName="promo" domainObjectName="PromoInfo" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>

@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     //订单的创建为一个事务
     @Transactional
-    public OrderModel createOrder(Integer userId, Integer itemId, Integer amount) throws BussinessException {
+    public OrderModel createOrder(Integer userId, Integer itemId, Integer promoId,Integer amount) throws BussinessException {
 
         //1、校验下单状态，下单的商品是否存在，用户是否合法，购买数量是否正确
         ItemModel itemModel = itemService.getItemById(itemId);
@@ -62,6 +62,17 @@ public class OrderServiceImpl implements OrderService {
             throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"数量信息不正确");
         }
 
+        //校验活动信息
+        if(promoId!=null){
+            //（1）校验对应活动是否存在这个适用商品
+            //传进来的promoId和itemModel中的promoModel中的不相等——不存在该活动
+            if(!promoId.equals(itemModel.getPromoModel().getId())){
+                throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"活动信息不正确");
+            }else if(itemModel.getPromoModel().getStatus()!=2){
+                throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"活动已结束或还未开始");
+            }
+        }
+
         //2、落单减库存（下单成功就加库存，而不是支付减库存——避免超卖现象）
         boolean result = itemService.decreaseStock(itemId,amount);
         if(!result){
@@ -73,8 +84,16 @@ public class OrderServiceImpl implements OrderService {
         orderModel.setUserId(userId);
         orderModel.setItemId(itemId);
         orderModel.setAmount(amount);
-        orderModel.setItemPrice(itemModel.getPrice());
-        orderModel.setOrderPrice(itemModel.getPrice().multiply(new BigDecimal(amount)));
+//        如果promoId!=null则证明有秒杀活动，就是用秒杀价格，如果==null就证明没有秒杀活动，就用平常销售价格
+        if(promoId!=null){
+            orderModel.setItemPrice(itemModel.getPromoModel().getPromoItemPrice());
+        }else {
+            orderModel.setItemPrice(itemModel.getPrice());
+        }
+
+        //使用orderModel.getItemPrice()，因为item的Price代表的是平销价格
+        //而orderModel.getItemPrice()已经在前面做过判断了，代表准确的价格（平销价/秒杀价）
+        orderModel.setOrderPrice(orderModel.getItemPrice().multiply(new BigDecimal(amount)));
 
         //生成订单号（交易流水号）
         orderModel.setId(generateOrderNo());

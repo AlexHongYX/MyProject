@@ -7,7 +7,9 @@ import com.fehead.dataobject.ItemStock;
 import com.fehead.error.BussinessException;
 import com.fehead.error.EmBusinessError;
 import com.fehead.service.ItemService;
+import com.fehead.service.PromoService;
 import com.fehead.service.model.ItemModel;
+import com.fehead.service.model.PromoModel;
 import com.fehead.validator.ValidationResult;
 import com.fehead.validator.ValidatorImpl;
 import org.springframework.beans.BeanUtils;
@@ -35,20 +37,24 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemStockMapper itemStockMapper;
 
+    //为了获取活动（秒杀）商品的相关信息
+    @Autowired
+    private PromoService promoService;
+
     @Override
     //创建一般都需要事务
     @Transactional
     public ItemModel createItem(ItemModel itemModel) throws BussinessException {
-        if(itemModel==null){
+        if (itemModel == null) {
             throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
 
         //校验入参（只是入参需要校验，有些在Service层设置或在Service层获取的属性值不用校验）
         //校验就需要给ItemModel中的部分属性加注解
         ValidationResult validationResult = validator.validate(itemModel);
-        if(validationResult.isHasErrors()){
+        if (validationResult.isHasErrors()) {
             //将map中的信息都抛出去
-            throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,validationResult.getErrMsg());
+            throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, validationResult.getErrMsg());
         }
 
         //转化itemModel->dataObject（itemModel->itemInfo）
@@ -75,7 +81,7 @@ public class ItemServiceImpl implements ItemService {
         List<ItemInfo> itemInfoList = itemInfoMapper.listItem();
         List<ItemModel> itemModelList = itemInfoList.stream().map(itemInfo -> {
             ItemStock itemStock = itemStockMapper.selectByItemId(itemInfo.getId());
-            ItemModel itemModel = this.convertItemModelFromDataObject(itemInfo,itemStock);
+            ItemModel itemModel = this.convertItemModelFromDataObject(itemInfo, itemStock);
             return itemModel;
         }).collect(Collectors.toList());
 
@@ -85,7 +91,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemModel getItemById(Integer id) {
         ItemInfo itemInfo = itemInfoMapper.selectByPrimaryKey(id);
-        if(itemInfo==null){
+        if (itemInfo == null) {
             return null;
         }
 
@@ -93,8 +99,19 @@ public class ItemServiceImpl implements ItemService {
         ItemStock itemStock = itemStockMapper.selectByItemId(itemInfo.getId());
 
         //将dataObject->model
-        ItemModel itemModel = this.convertItemModelFromDataObject(itemInfo,itemStock);
+        ItemModel itemModel = this.convertItemModelFromDataObject(itemInfo, itemStock);
 
+        //获取活动商品信息
+        PromoModel promoModel = promoService.getPromoByItemId(itemModel.getId());
+        //若为空或==3证明没有该秒杀信息或秒杀已结束
+        //如果是Integer和int相比较可以直接比较
+        //如果是两个Integer相比较两个Integer都需要使用Integer.intValue()进行比较
+        if (promoModel != null && promoModel.getStatus() != 3) {
+            itemModel.setPromoModel(promoModel);
+        }
+
+//        返回给Controller的itemModel中的promoModel要么是null，要么不是null
+//        Service层做过不存在或已结束的判断，Controller只需要判断是不是null即可
         return itemModel;
     }
 
@@ -103,30 +120,33 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public boolean decreaseStock(Integer itemId, Integer amount) throws BussinessException {
         //影响行数——若更新成功返回对应行数1，没成功返回0
-        int affectedRow = itemStockMapper.decreaseStock(itemId,amount);
-        if(affectedRow>0){
-            //更新库存成功
-            return true;
-        }else {
-            //更新库存失败
-            return false;
-        }
+        int affectedRow = itemStockMapper.decreaseStock(itemId, amount);
+//        if (affectedRow > 0) {
+//            //更新库存成功
+//            return true;
+//        } else {
+//            //更新库存失败
+//            return false;
+//        }
+//        简单写法
+        return affectedRow > 0;
+
     }
 
     @Override
     //更新使销量增加需要事务
     @Transactional
     public void increaseSales(Integer itemId, Integer amount) throws BussinessException {
-        itemInfoMapper.increaseSales(itemId,amount);
+        itemInfoMapper.increaseSales(itemId, amount);
     }
 
     //model->dataObject   ItemModel->ItemInfo
-    private ItemInfo convertItemInfoFromItemModel(ItemModel itemModel){
-        if(itemModel==null){
+    private ItemInfo convertItemInfoFromItemModel(ItemModel itemModel) {
+        if (itemModel == null) {
             return null;
         }
         ItemInfo itemInfo = new ItemInfo();
-        BeanUtils.copyProperties(itemModel,itemInfo);
+        BeanUtils.copyProperties(itemModel, itemInfo);
         //因为model和info中的price属性的数据类型不一致，所以BeanUtils不能处理
         // 只能手动处理：将BigDecimal转换为double
         itemInfo.setPrice(itemModel.getPrice().doubleValue());
@@ -134,8 +154,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     //model->dataObject   ItemModel->ItemStock
-    private ItemStock convertItemStockFromItemModel(ItemModel itemModel){
-        if(itemModel==null){
+    private ItemStock convertItemStockFromItemModel(ItemModel itemModel) {
+        if (itemModel == null) {
             return null;
         }
         ItemStock itemStock = new ItemStock();
@@ -146,9 +166,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     //dataObject->model     ItemInfo+ItemStock->ItemModel
-    private ItemModel convertItemModelFromDataObject(ItemInfo itemInfo,ItemStock itemStock){
+    private ItemModel convertItemModelFromDataObject(ItemInfo itemInfo, ItemStock itemStock) {
         ItemModel itemModel = new ItemModel();
-        BeanUtils.copyProperties(itemInfo,itemModel);
+        BeanUtils.copyProperties(itemInfo, itemModel);
         //price的类型不匹配，手动转换——将double转换为BigDecimal->new BigDecimal(double)
         itemModel.setPrice(new BigDecimal(itemInfo.getPrice()));
         itemModel.setStock(itemStock.getStock());

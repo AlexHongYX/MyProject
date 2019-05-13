@@ -33,6 +33,13 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
+    <!-- 引入日期格式的依赖-->
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.9.9</version>
+    </dependency>
+
     <!-- 引入validator校验的依赖-->
     <dependency>
       <groupId>org.hibernate</groupId>

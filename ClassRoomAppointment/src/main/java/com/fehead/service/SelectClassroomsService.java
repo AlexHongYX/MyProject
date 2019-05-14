@@ -1,6 +1,7 @@
 package com.fehead.service;
 
-import com.fehead.bean.*;
+import com.fehead.error.BussinessException;
+import com.fehead.service.model.ClassroomModel;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ import java.util.List;
  */
 public interface SelectClassroomsService {
 
-    List<ClassroomSelectBean> selectAllClassroomsFromLocation(String build, String buildnumber, int buildlevel);
+    List<ClassroomModel> selectClassrooms(String build, String buildnumber, int buildlevel,
+                                          int week, int day, int time) throws BussinessException;
 }

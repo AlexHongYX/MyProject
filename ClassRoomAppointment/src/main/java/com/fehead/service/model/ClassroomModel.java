@@ -9,11 +9,20 @@ public class ClassroomModel {
     private String build;
     private String buildnumber;
     private int buildlevel;
+    private String classroom;
     private int week;
     private int day;
     private int time;
-    //教室的状态：0 空着，1 被占
-    private Integer status;
+    //教室的状态：true 被占 false 空着
+    private Boolean status;
+
+    public String getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
+    }
 
     public String getBuild() {
         return build;
@@ -63,11 +72,11 @@ public class ClassroomModel {
         this.time = time;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 }

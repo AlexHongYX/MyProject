@@ -6,10 +6,6 @@ package com.fehead.dao;
  */
 public interface ApplyClassroomsMapper {
 
-    Integer insertBuild(String build);
-
-    Integer insertBuildBuildnumber(Integer buildId,String buildNumber);
-
-    Integer insertBuildlevelClassroom(Integer buildlevel,Integer classroom);
+    void insertAllTables(String build,String buildnumber,Integer buildlevel,Integer day,Integer time,Integer week,Integer classroom);
 
 }

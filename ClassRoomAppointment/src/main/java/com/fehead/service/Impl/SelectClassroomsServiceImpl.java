@@ -34,6 +34,10 @@ public class SelectClassroomsServiceImpl implements SelectClassroomsService {
 
         List<ClassroomSelectBean> classroomSelectBeans = selectClassroomsMapper.selectAllClassroomsFromLocation(build,buildnumber,buildlevel);
 
+        if(classroomSelectBeans.size()==0){
+            throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"查询失败，位置错误");
+        }
+
         List<ClassroomSelectBean> selectedBeans = selectClassroomsMapper.selectClassroom(build,buildnumber,buildlevel,week,day,time);
 
         //使用Collection.sort的排序算法，按照元素的classroom属性的升序对集合进行排序

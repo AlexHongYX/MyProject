@@ -3,6 +3,7 @@ package com.fehead.controller;
 import com.fehead.error.BussinessException;
 import com.fehead.response.CommonReturnType;
 import com.fehead.service.ApplyClassroomsService;
+import com.fehead.service.model.ClassroomModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -34,12 +35,12 @@ public class ApplyClassroomsController extends BaseController {
 
         long startTime = System.currentTimeMillis();//获取开始时间
 
-        applyClassroomsService.applyClassrooms(build,buildnumber,buildlevel,week,day,time,classrooms);
+        List<ClassroomModel> classroomModels =  applyClassroomsService.applyClassrooms(build,buildnumber,buildlevel,week,day,time,classrooms);
 
         long endTime = System.currentTimeMillis();//获取结束时间
         System.out.println("startTime="+startTime+";endTime="+endTime+";runtime:"+(endTime-startTime)+"ms");
 
-        return CommonReturnType.create("Insert Success");
+        return CommonReturnType.create(classroomModels);
     }
 
 }

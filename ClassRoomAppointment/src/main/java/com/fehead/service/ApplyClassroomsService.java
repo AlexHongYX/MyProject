@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface ApplyClassroomsService {
 
-    List<ClassroomModel>  applyClassrooms(String build, String buildnumber, int buildlevel,
+    List<ClassroomModel> applyClassrooms(String build, String buildnumber, int buildlevel,
                                           int week, int day, int time,List<String> classrooms) throws BussinessException;
 }

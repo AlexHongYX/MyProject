@@ -1,31 +1,20 @@
-package com.fehead.service.model;
+package com.fehead.bean;
 
 /**
- * Created by xiaoaxiao on 2019/5/13
+ * Created by xiaoaxiao on 2019/5/16
  * Description:
  */
-public class ClassroomModel {
+public class ClassroomInsertBean {
 
     private String build;
     private String buildnumber;
     private int buildlevel;
-    private String classroom;
+    private Integer classroom;
     private int week;
     private int day;
     private int time;
-    //教室的状态：true 被占 false 空着
-    private Boolean status;
 
-    public ClassroomModel(){}
-
-
-    public String getClassroom() {
-        return classroom;
-    }
-
-    public void setClassroom(String classroom) {
-        this.classroom = classroom;
-    }
+    private int insert_count;
 
     public String getBuild() {
         return build;
@@ -49,6 +38,14 @@ public class ClassroomModel {
 
     public void setBuildlevel(int buildlevel) {
         this.buildlevel = buildlevel;
+    }
+
+    public void setClassroom(Integer classroom) {
+        this.classroom = classroom;
+    }
+
+    public Integer getClassroom() {
+        return classroom;
     }
 
     public int getWeek() {
@@ -75,11 +72,11 @@ public class ClassroomModel {
         this.time = time;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public int getInsert_count() {
+        return insert_count;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setInsert_count(int insert_count) {
+        this.insert_count = insert_count;
     }
 }

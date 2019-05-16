@@ -1,11 +1,15 @@
 package com.fehead.dao;
 
+import com.fehead.bean.ClassroomInsertBean;
+
+import java.util.Map;
+
 /**
  * Created by xiaoaxiao on 2019/5/14
  * Description:
  */
 public interface ApplyClassroomsMapper {
 
-    void insertAllTables(String build,String buildnumber,Integer buildlevel,Integer day,Integer time,Integer week,Integer classroom);
+    void insertAllTables(ClassroomInsertBean classroomInsertBean);
 
 }

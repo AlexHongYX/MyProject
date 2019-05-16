@@ -1,12 +1,12 @@
---创建插入所有表的存储过程
---一条完整的数据需要分别插入对应的表
---包括关系表（因为在查询时会用到）
+-- 创建插入所有表的存储过程
+-- 一条完整的数据需要分别插入对应的表
+-- 包括关系表（因为在查询时会用到）
 DELIMITER $$ -- console ; 转换为 $$
 
 -- 定义存储过程
 CREATE PROCEDURE classroomInsert
   (IN v_build VARCHAR(50),IN v_buildnumber VARCHAR(5),IN v_buildlevel INT,IN v_day INT,
-  IN v_time INT,IN v_week INT,IN v_classroom INT,OUT r_result INT)
+  IN v_time INT,IN v_week INT,IN v_classroom INT,OUT insert_count INT)
   -- 添加OUT，返回的r_result若为0则没插入（重复插入），若为1则插入成功
   BEGIN
      declare v_build_id INT;
@@ -17,7 +17,15 @@ CREATE PROCEDURE classroomInsert
      declare v_time_id INT;
      -- 添加返回值，给后端判断到底有没有添加成功
      -- 添加insert_count的值，插入是否成功，重复插入返回0，否则返回非0
-     declare insert_count INT DEFAULT 1;
+--      declare insert_count INT DEFAULT 1;
+
+--     设置事务：一旦设置了事务，在该段代码中要么ROLLBACK（回滚），要么COMMIT（提交），
+--     否则只有遇到下一次事务开启时，这次事务才会被迫结束（这就导致了刚才那个问题）
+--     -- 问题是：
+--     -- 第一次插入：result->1 但不插入
+--     -- 第二次插入：result->0 但插入
+--     -- 应该是哪里写反了
+--        m d z z
      START TRANSACTION;
 
     INSERT IGNORE into build(build) VALUES(v_build);
@@ -36,11 +44,14 @@ CREATE PROCEDURE classroomInsert
     -- 第一次插入：result->1 但不插入
     -- 第二次插入：result->0 但插入
     -- 应该是哪里写反了
-    IF (insert_count = 0) THEN
-      SET r_result = 1;
-    ELSE
-      SET r_result = 0;
-    END IF;
+
+    -- 问题解决——事务的提交与回滚
+
+--     IF (insert_count = 0) THEN
+--       SET r_result = 0;
+--     ELSE
+--       SET r_result = 1;
+--     END IF;
 
     SELECT buildlevel_classroom_id into v_buildlevel_classroom_id from buildlevel_classroom where buildlevel=v_buildlevel and classroom=v_classroom;
 
@@ -53,13 +64,16 @@ CREATE PROCEDURE classroomInsert
     INSERT IGNORE into week_day_time(week_day_id,time) VALUES (v_week_day_id,v_time);
     SELECT id into v_time_id from week_day_time where week_day_id=v_week_day_id and time=v_time;
 
-    IF (r_result = 1) THEN
+    IF (insert_count = 1) THEN
       INSERT into query(time_id,classroom_id) VALUES (v_time_id,v_classroom_id);
+      COMMIT;
+    ELSE
+      COMMIT;
     END IF;
 
   END;
 $$
---存储过程定义结束
+-- 存储过程定义结束
 
 DELIMITER ; -- 还原为;
 
@@ -68,8 +82,9 @@ show create procedure classroomInsert;
 -- 删除存储过程
 drop PROCEDURE classroomInsert;
 
-set @r_result=-3;
+-- 测试数据
+set @insert_count=-3;
 -- 执行存储过程
-call classroomInsert('哈哈','H',20,99,999,30,55,@r_result);
+call classroomInsert('哈哈','H',20,99,999,30,55,@insert_count);
 -- 获取结果
-select @r_result;
+select @insert_count;

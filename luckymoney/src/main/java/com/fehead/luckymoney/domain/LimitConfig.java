@@ -40,4 +40,13 @@ public class LimitConfig {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "LimitConfig{" +
+                "minMoney=" + minMoney +
+                ", maxMoney=" + maxMoney +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

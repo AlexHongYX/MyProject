@@ -3,6 +3,7 @@ package com.fehead.luckymoney.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 
 /**
@@ -16,6 +17,7 @@ public class Luckymoney {
     @GeneratedValue
     private Integer id;
 
+    @Min(value = 10,message = "10块以下还好意思发？")
     private BigDecimal money;
 
     //发送方

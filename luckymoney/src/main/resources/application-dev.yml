@@ -22,3 +22,13 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  #配置热部署
+  thymeleaf:
+    cache: false
+  #热部署生效
+  devtools:
+    restart:
+      enabled: true
+      #设置重启的目录文件需要restart
+      additional-paths: src/main/java
+

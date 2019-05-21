@@ -1,6 +1,9 @@
 package com.fehead.luckymoney.service;
 
 import com.fehead.luckymoney.domain.Luckymoney;
+import com.fehead.luckymoney.domain.Result;
+import com.fehead.luckymoney.enums.ResultEnum;
+import com.fehead.luckymoney.exception.LuckymoneyException;
 import com.fehead.luckymoney.properties.LuckymoneyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +36,25 @@ public class LuckymoneyService {
         luckymoney2.setProducer("B");
         luckymoney2.setMoney(new BigDecimal("1314"));
         luckymoneyRepository.save(luckymoney2);
+    }
+
+    public void getMoney(Integer id) throws Exception {
+        //2.0版本需要luckymoneyRepository.findById(id).orElse(null);
+        Luckymoney luckymoney = luckymoneyRepository.findById(id).orElse(null);
+        BigDecimal money = luckymoney.getMoney();
+        if(money.intValue()<10){
+            //"这么点钱能够？"
+            throw new LuckymoneyException(ResultEnum.UNDER_TEN);
+        }else if(money.intValue()>=10&&money.intValue()<=20){
+            //"就加10块钱？"
+            throw new LuckymoneyException(ResultEnum.UNDER_TWENTY);
+        }
+    }
+
+    /**
+     * 通过id查询luckymoney——做测试用
+     */
+    public Luckymoney findOne(Integer id){
+        return luckymoneyRepository.findById(id).orElse(null);
     }
 }

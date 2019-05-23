@@ -31,7 +31,7 @@ public class ApplyClassroomsServiceImpl implements ApplyClassroomsService {
 
 
     @Override
-    public List<ClassroomModel> applyClassrooms(String build, String buildnumber, int buildlevel, int week, int day, int time, List<String> classrooms) throws BussinessException {
+    public List<ClassroomModel> applyClassrooms(String build, String buildnumber, int buildlevel, int week, int day, int time, String[] classrooms) throws BussinessException {
         if (build == null || buildnumber == null) {
             throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
@@ -68,7 +68,7 @@ public class ApplyClassroomsServiceImpl implements ApplyClassroomsService {
         return classroomModels;
     }
 
-    private ClassroomModel convertClassroomModelFromClassroomInsertBean(ClassroomInsertBean classroomInsertBean){
+    private ClassroomModel convertClassroomModelFromClassroomInsertBean(ClassroomInsertBean classroomInsertBean) throws BussinessException {
         if(classroomInsertBean==null){
             return null;
         }
@@ -79,7 +79,7 @@ public class ApplyClassroomsServiceImpl implements ApplyClassroomsService {
         classroomModel.setClassroom(String.valueOf(classroomInsertBean.getClassroom()));
 
         if(classroomInsertBean.getInsert_count()==0){
-            classroomModel.setStatus(false);
+            throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"重复插入");
         }else {
             classroomModel.setStatus(true);
         }

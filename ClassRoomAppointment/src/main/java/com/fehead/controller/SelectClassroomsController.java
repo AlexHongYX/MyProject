@@ -3,16 +3,12 @@ package com.fehead.controller;
 import com.fehead.error.BussinessException;
 import com.fehead.error.EmBusinessError;
 import com.fehead.response.CommonReturnType;
-import com.fehead.bean.*;
 import com.fehead.controller.viewobject.*;
 import com.fehead.service.*;
 import com.fehead.service.model.ClassroomModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +26,7 @@ public class SelectClassroomsController extends BaseController{
     @Autowired
     private SelectClassroomsService selectClassroomsService;
 
-    @RequestMapping("/selectClassrooms")
+    @RequestMapping(value = "/selectClassrooms",method = RequestMethod.GET)
     @ResponseBody
     public CommonReturnType selectClassrooms(@RequestParam("build") String build,
                                              @RequestParam("buildnumber") String buildnumber,

@@ -17,16 +17,19 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public String insertUser(String organization, String name, String telphone, String description) {
+    public UserModel insertUser(String organization, String name, String telphone) {
 
         UserModel userModel = new UserModel();
         userModel.setOrganization(organization);
         userModel.setName(name);
         userModel.setTelphone(telphone);
-        userModel.setOrganization(organization);
 
-        userMapper.insertUser(userModel);
+        Integer result = userMapper.selectUser(userModel);
 
-        return "登录成功";
+        if(result==null){
+            userMapper.insertUser(userModel);
+        }
+
+        return userModel;
     }
 }

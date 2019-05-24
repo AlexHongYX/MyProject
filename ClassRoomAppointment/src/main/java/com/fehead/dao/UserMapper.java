@@ -8,5 +8,7 @@ import com.fehead.service.model.UserModel;
  */
 public interface UserMapper {
 
+    Integer selectUser(UserModel userModel);
+
     void insertUser(UserModel userModel);
 }

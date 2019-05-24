@@ -8,5 +8,5 @@ import com.fehead.service.model.UserModel;
  */
 public interface UserService {
 
-    String insertUser(String organization,String name,String telphone,String description);
+    UserModel insertUser(String organization,String name,String telphone);
 }

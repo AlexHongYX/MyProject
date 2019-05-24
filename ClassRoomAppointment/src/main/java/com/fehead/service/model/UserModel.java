@@ -11,6 +11,14 @@ public class UserModel {
     private String telphone;
     private String description;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getOrganization() {
         return organization;
     }
@@ -35,11 +43,12 @@ public class UserModel {
         this.telphone = telphone;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "organization='" + organization + '\'' +
+                ", name='" + name + '\'' +
+                ", telphone='" + telphone + '\'' +
+                '}';
     }
 }

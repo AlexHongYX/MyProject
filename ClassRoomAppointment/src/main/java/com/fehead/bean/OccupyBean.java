@@ -5,4 +5,6 @@ package com.fehead.bean;
  * Description:
  */
 public class OccupyBean {
+
+
 }

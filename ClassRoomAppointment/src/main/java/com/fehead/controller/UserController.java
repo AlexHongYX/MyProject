@@ -32,13 +32,12 @@ public class UserController extends BaseController {
      * 前端发送请求，在cookie中查找是否有已登录的社团信息，如果没有就跳到社团信息输入页面，如果有就直接跳到选择具体位置和时间的页面
      */
     @RequestMapping(value = "/isUserExist",method = RequestMethod.GET)
-    public void isUserExist() {
-
-        UserModel userModel = new UserModel();
-
-        //获取cookie数组
+    public CommonReturnType isUserExist() {
         Cookie[] cookies = request.getCookies();
-        if(cookies!=null){
+        if(cookies==null&&cookies.length==0){
+            return CommonReturnType.create(0);
+        }else {
+            UserModel userModel = new UserModel();
             //遍历cookie数组，将最初设定的cookie数组的信息取出来
             for(Cookie cookie:cookies){
                 if(cookie.getName().equals("organization")){
@@ -49,8 +48,10 @@ public class UserController extends BaseController {
                     userModel.setTelphone(cookie.getValue());
                 }
             }
+            System.out.println(userModel);
+            return CommonReturnType.create(1);
         }
-        System.out.println(userModel);
+
     }
 
     /**

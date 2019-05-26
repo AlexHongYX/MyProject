@@ -16,4 +16,6 @@
     <insert id="insertUser">
         insert into users(organization,name,telphone) values(#{organization},#{name},#{telphone});
     </insert>
+
+
 </mapper>

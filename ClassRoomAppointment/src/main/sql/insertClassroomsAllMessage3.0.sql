@@ -6,7 +6,8 @@ DELIMITER $$ -- console ; 转换为 $$
 -- 定义存储过程
 CREATE PROCEDURE classroomInsert
   (IN v_build VARCHAR(50),IN v_buildnumber VARCHAR(5),IN v_buildlevel INT,IN v_day INT,
-  IN v_time INT,IN v_week INT,IN v_classroom INT,OUT insert_count INT)
+  IN v_time INT,IN v_week INT,IN v_classroom INT,IN v_organization VARCHAR(50),IN v_name VARCHAR(50)
+  ,IN v_telphone VARCHAR(50),IN v_description VARCHAR(250),OUT insert_count INT)
   -- 添加OUT，返回的r_result若为0则没插入（重复插入），若为1则插入成功
   BEGIN
      declare v_build_id INT;
@@ -15,6 +16,8 @@ CREATE PROCEDURE classroomInsert
      declare v_classroom_id INT;
      declare v_week_day_id INT;
      declare v_time_id INT;
+     declare v_user_id INT;
+     declare v_query_id INT DEFAULT 0;
      -- 添加返回值，给后端判断到底有没有添加成功
      -- 添加insert_count的值，插入是否成功，重复插入返回0，否则返回非0
 --      declare insert_count INT DEFAULT 1;
@@ -26,7 +29,7 @@ CREATE PROCEDURE classroomInsert
 --     -- 第二次插入：result->0 但插入
 --     -- 应该是哪里写反了
 --        m d z z
-    DECLARE select_count INT DEFAULT 0;
+
     START TRANSACTION;
 
     INSERT IGNORE into build(build) VALUES(v_build);
@@ -64,20 +67,29 @@ CREATE PROCEDURE classroomInsert
     INSERT IGNORE into week_day_time(week_day_id,time) VALUES (v_week_day_id,v_time);
     SELECT id into v_time_id from week_day_time where week_day_id=v_week_day_id and time=v_time;
 
-    SELECT id into select_count from query where time_id = v_time_id and classroom_id = v_classroom_id;
+    SELECT id into v_query_id from query where time_id = v_time_id and classroom_id = v_classroom_id;
 
     -- 如果select_count=0——证明还没有插入过，所以需要插入数据，如果select_count!=0，证明已经插入过了（已经可以查到信息）
-    IF (select_count = 0) THEN
+    IF (v_query_id = 0) THEN
       INSERT into query(time_id,classroom_id) VALUES (v_time_id,v_classroom_id);
       -- 如果插入成功，将insert_count设置为1
       SELECT row_count() INTO insert_count;
-      COMMIT ;
     ELSE
       -- 如果没进行插入，将insert_count设置为0
       SET insert_count = 0;
-      COMMIT;
     END IF;
 
+    -- 再查一下query_id
+    SELECT id into v_query_id from query where time_id = v_time_id and classroom_id = v_classroom_id;
+
+    -- 根据社团信息，查出社团id
+    SELECT id into v_user_id from users where organization = v_organization and name = v_name and telphone = v_telphone;
+
+    -- 将query_id和user_id和description插入到对应表中
+    INSERT into occupy(query_id,user_id,description) VALUES (v_query_id,v_user_id,v_description);
+
+    -- 事务提交
+    COMMIT;
   END;
 $$
 -- 存储过程定义结束
@@ -92,6 +104,6 @@ drop PROCEDURE classroomInsert;
 -- 测试数据
 set @insert_count=-3;
 -- 执行存储过程
-call classroomInsert('哈哈','H',20,99,999,30,55,@insert_count);
+call classroomInsert('哈哈','H',20,99,999,30,55,'校青团','李老师','12345678910','开会',@insert_count);
 -- 获取结果
 select @insert_count;

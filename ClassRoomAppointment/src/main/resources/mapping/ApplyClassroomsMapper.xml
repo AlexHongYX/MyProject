@@ -24,6 +24,10 @@
             #{time,jdbcType=INTEGER,mode=IN},
             #{week,jdbcType=INTEGER,mode=IN},
             #{classroom,jdbcType=INTEGER,mode=IN},
+            #{organization,jdbcType=VARCHAR,mode=IN},
+            #{name,jdbcType=VARCHAR,mode=IN},
+            #{telphone,jdbcType=VARCHAR,mode=IN},
+            #{description,jdbcType=VARCHAR,mode=IN},
             #{insert_count,jdbcType=INTEGER,mode=OUT}
           )
 

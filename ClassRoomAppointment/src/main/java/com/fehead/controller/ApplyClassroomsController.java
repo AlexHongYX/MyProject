@@ -38,7 +38,11 @@ public class ApplyClassroomsController extends BaseController {
                                             @RequestParam("week") int week,
                                             @RequestParam("day") int day,
                                             @RequestParam("time") int time,
-                                            @RequestParam("classroom") String[] classrooms) throws BussinessException {
+                                            @RequestParam("classroom") String[] classrooms,
+                                            @RequestParam("organization") String organization,
+                                            @RequestParam("name") String name,
+                                            @RequestParam("telphone")String telphone,
+                                            @RequestParam("description")String description) throws BussinessException {
 
         long startTime = System.currentTimeMillis();//获取开始时间
 
@@ -60,34 +64,34 @@ public class ApplyClassroomsController extends BaseController {
 //            }
 //        }
 
-    //获取用户信息
-        UserModel userModel = new UserModel();
+//    //获取用户信息
+//        UserModel userModel = new UserModel();
 
-        //获取cookie数组
-        Cookie[] cookies = request.getCookies();
-        if(cookies!=null){
-            //遍历cookie数组，将最初设定的cookie数组的信息取出来
-            for(Cookie cookie:cookies){
-                if(cookie.getName().equals("organization")){
-                    userModel.setOrganization(cookie.getValue());
-                }else if(cookie.getName().equals("name")){
-                    userModel.setName(cookie.getValue());
-                }else if(cookie.getName().equals("telphone")){
-                    userModel.setTelphone(cookie.getValue());
-                }else if(cookie.getName().equals("description")){
-                    userModel.setDescription(cookie.getValue());
-                }
-            }
-        }
-        System.out.println(userModel);
+//        //获取cookie数组
+//        Cookie[] cookies = request.getCookies();
+//        if(cookies!=null){
+//            //遍历cookie数组，将最初设定的cookie数组的信息取出来
+//            for(Cookie cookie:cookies){
+//                if(cookie.getName().equals("organization")){
+//                    userModel.setOrganization(cookie.getValue());
+//                }else if(cookie.getName().equals("name")){
+//                    userModel.setName(cookie.getValue());
+//                }else if(cookie.getName().equals("telphone")){
+//                    userModel.setTelphone(cookie.getValue());
+//                }else if(cookie.getName().equals("description")){
+//                    userModel.setDescription(cookie.getValue());
+//                }
+//            }
+//        }
+//        System.out.println(userModel);
 
 
 //        System.out.println("build"+build+",buildnumber"+buildnumber+",buildlevel"+buildlevel+",week"+week+",day"+day+",time"+time+",classroom[0]:"+classrooms[0]);
 
         //将数据插入到对应query表中
-        List<ClassroomModel> classroomModels =  applyClassroomsService.applyClassrooms(build,buildnumber,buildlevel,week,day,time,classrooms);
+        List<ClassroomModel> classroomModels =  applyClassroomsService.applyClassrooms(build,buildnumber,buildlevel,week,day,time,classrooms,organization,name,telphone,description);
 
-        //将cookie数据与教室预约信息插入到总表中，实现绑定
+        //将社团信息与教室预约信息插入到总表中，实现绑定
 
         long endTime = System.currentTimeMillis();//获取结束时间
         System.out.println("startTime="+startTime+";endTime="+endTime+";runtime:"+(endTime-startTime)+"ms");

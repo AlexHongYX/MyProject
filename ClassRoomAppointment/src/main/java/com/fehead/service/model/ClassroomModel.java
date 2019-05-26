@@ -13,6 +13,10 @@ public class ClassroomModel {
     private int week;
     private int day;
     private int time;
+    private String organization;
+    private String name;
+    private String telphone;
+    private String description;
     //教室的状态：true 被占 false 空着
     private Boolean status;
 
@@ -73,6 +77,38 @@ public class ClassroomModel {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTelphone() {
+        return telphone;
+    }
+
+    public void setTelphone(String telphone) {
+        this.telphone = telphone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Boolean getStatus() {

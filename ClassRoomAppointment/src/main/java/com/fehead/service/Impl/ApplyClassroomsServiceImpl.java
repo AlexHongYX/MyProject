@@ -1,7 +1,6 @@
 package com.fehead.service.Impl;
 
 import com.fehead.bean.ClassroomInsertBean;
-import com.fehead.bean.ClassroomSelectBean;
 import com.fehead.dao.ApplyClassroomsMapper;
 import com.fehead.error.BussinessException;
 import com.fehead.error.EmBusinessError;
@@ -12,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by xiaoaxiao on 2019/5/14
@@ -38,7 +35,7 @@ public class ApplyClassroomsServiceImpl implements ApplyClassroomsService {
         }
 
         //创建返回Classroom的集合
-        List<ClassroomModel> classroomModels = new ArrayList<>();
+        List<ClassroomModel> classroomModels = new ArrayList<ClassroomModel>();
 
         for (String classroom : classrooms) {
             //使用创建一个classroomInsertBean的方式：MySQL获得数据库存储过程中的OUT返回的值

@@ -51,18 +51,18 @@ public class ApplyClassroomsController extends BaseController {
         // 将"11"]  ["8"  "9"  "10"   转换为正确的格式->8,9,10,11
 
         //本机测设将这段先注释掉
-//        if(classrooms.length==1){
-//            classrooms[classrooms.length-1] = classrooms[0].substring(2,4);
-//        }else {
-//            for(int i=0;i<classrooms.length;i++){
-//                if(i==0){
-//                    classrooms[i] = classrooms[i].substring(2,4);
-//                }else{
-//                    classrooms[i] = classrooms[i].substring(1,3);
-//                }
-////            arr[i] = Integer.valueOf(classrooms[i]);
-//            }
-//        }
+        if(classrooms.length==1){
+            classrooms[classrooms.length-1] = classrooms[0].substring(2,4);
+        }else {
+            for(int i=0;i<classrooms.length;i++){
+                if(i==0){
+                    classrooms[i] = classrooms[i].substring(2,4);
+                }else{
+                    classrooms[i] = classrooms[i].substring(1,3);
+                }
+//            arr[i] = Integer.valueOf(classrooms[i]);
+            }
+        }
 
 //    //获取用户信息
 //        UserModel userModel = new UserModel();

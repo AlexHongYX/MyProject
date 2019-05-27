@@ -6,10 +6,7 @@ package com.fehead.bean;
  */
 public class UserSelectBean {
 
-    private String organization;
-    private String name;
-    private String telphone;
-    private String description;
+    private Integer query_id;
     private String build;
     private String buildnumber;
     private Integer buildlevel;
@@ -18,38 +15,6 @@ public class UserSelectBean {
     private Integer week;
     private Integer classroom;
 
-
-    public String getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(String organization) {
-        this.organization = organization;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTelphone() {
-        return telphone;
-    }
-
-    public void setTelphone(String telphone) {
-        this.telphone = telphone;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getBuild() {
         return build;
@@ -107,13 +72,18 @@ public class UserSelectBean {
         this.classroom = classroom;
     }
 
+    public Integer getQuery_id() {
+        return query_id;
+    }
+
+    public void setQuery_id(Integer query_id) {
+        this.query_id = query_id;
+    }
+
     @Override
     public String toString() {
         return "UserSelectBean{" +
-                "organization='" + organization + '\'' +
-                ", name='" + name + '\'' +
-                ", telphone='" + telphone + '\'' +
-                ", description='" + description + '\'' +
+                "query_id=" + query_id +
                 ", build='" + build + '\'' +
                 ", buildnumber='" + buildnumber + '\'' +
                 ", buildlevel=" + buildlevel +

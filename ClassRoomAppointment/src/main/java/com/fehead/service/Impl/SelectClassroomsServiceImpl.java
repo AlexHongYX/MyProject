@@ -49,7 +49,7 @@ public class SelectClassroomsServiceImpl implements SelectClassroomsService {
         });
 
         //创建一个List<Model>
-        List<ClassroomModel> classroomModels = new ArrayList<>();
+        List<ClassroomModel> classroomModels = new ArrayList<ClassroomModel>();
 
         //因为classroomSelectBeans和selectedBeans存储的元素内容可能会相等，但实际存储绝对不相等
         //所以需要重写ClassroomSelectBean的equals方法，只判断字段内容是否相等即可（不需要hashCode也相同）

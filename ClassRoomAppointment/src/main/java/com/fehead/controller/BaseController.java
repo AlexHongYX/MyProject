@@ -28,7 +28,7 @@ public class BaseController {
     @ResponseBody
     public Object handlerException(HttpServletRequest request,Exception ex){
 
-        Map<String,Object> responseData = new HashMap<>();
+        Map<String,Object> responseData = new HashMap<String, Object>();
         //ex对象是否是BussinessException的一个实例（ex可能报的不是BussinessException异常）
         if(ex instanceof BussinessException){
             BussinessException bussinessException = (BussinessException)ex;

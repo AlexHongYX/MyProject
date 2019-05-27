@@ -53,7 +53,7 @@ public class SelectClassroomsController extends BaseController{
         if(classroomModels==null||classroomModels.size()==0){
             return null;
         }
-        List<ClassroomSelectVO> classroomSelectVOS = new ArrayList<>();
+        List<ClassroomSelectVO> classroomSelectVOS = new ArrayList<ClassroomSelectVO>();
 
         for(ClassroomModel classroomModel:classroomModels){
             ClassroomSelectVO classroomSelectVO = new ClassroomSelectVO();

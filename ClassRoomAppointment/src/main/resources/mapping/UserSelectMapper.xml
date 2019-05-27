@@ -5,10 +5,6 @@
 
     <!-- 为了能够获得存储过程的out而创建-->
     <resultMap id="BaseResultMap" type="com.fehead.bean.UserSelectBean">
-        <result column="organization" property="organization" jdbcType="VARCHAR"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="telphone" property="telphone" jdbcType="VARCHAR"/>
-        <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="build" property="build" jdbcType="VARCHAR"/>
         <result column="buildnumber" property="buildnumber" jdbcType="VARCHAR"/>
         <result column="buildlevel" property="buildlevel" jdbcType="INTEGER"/>
@@ -19,13 +15,10 @@
     </resultMap>
 
     <!-- 使用存储过程-->
-    <select id="selectUserMessage" parameterType="com.fehead.bean.UserSelectBean" statementType="CALLABLE">
+    <select id="selectUserMessage" parameterType="com.fehead.bean.UserSelectBean"  resultMap="BaseResultMap" statementType="CALLABLE">
 
         call userSelect(
-          #{organization,jdbcType=VARCHAR,mode=IN},
-          #{name,jdbcType=VARCHAR,mode=IN},
-          #{telphone,jdbcType=VARCHAR,mode=IN},
-          #{description,jdbcType=VARCHAR,mode=IN},
+          #{query_id,jdbcType=INTEGER,mode=IN},
           #{build,jdbcType=VARCHAR,mode=OUT},
           #{buildnumber,jdbcType=VARCHAR,mode=OUT},
           #{buildlevel,jdbcType=INTEGER,mode=OUT},
@@ -36,7 +29,7 @@
         )
     </select>
 
-    <select id="selectClassroomsByUser" parameterType="com.fehead.bean.UserBean">
+    <select id="selectClassroomsByUser" parameterType="com.fehead.bean.UserBean" resultType="java.lang.Integer">
         select query_id from occupy where user_id = (select id from users where organization = #{organization} and name = #{name} and telphone=#{telphone})
     </select>
 </mapper>

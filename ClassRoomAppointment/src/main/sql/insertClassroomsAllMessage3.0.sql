@@ -74,22 +74,25 @@ CREATE PROCEDURE classroomInsert
       INSERT into query(time_id,classroom_id) VALUES (v_time_id,v_classroom_id);
       -- 如果插入成功，将insert_count设置为1
       SELECT row_count() INTO insert_count;
+
+      -- 只有当前教室没有被预约过才会插入教室信息+（教室信息+社团信息）
+      -- 再查一下query_id
+      SELECT id into v_query_id from query where time_id = v_time_id and classroom_id = v_classroom_id;
+
+      -- 根据社团信息，查出社团id
+      SELECT id into v_user_id from users where organization = v_organization and name = v_name and telphone = v_telphone;
+
+      -- 将query_id和user_id和description插入到对应表中
+      INSERT into occupy(query_id,user_id,description) VALUES (v_query_id,v_user_id,v_description);
+
+      -- 事务提交
+      COMMIT;
     ELSE
       -- 如果没进行插入，将insert_count设置为0
       SET insert_count = 0;
+      -- 已经插入过了，就直接提交事务，否则还会执行下面的插入操作
+      COMMIT ;
     END IF;
-
-    -- 再查一下query_id
-    SELECT id into v_query_id from query where time_id = v_time_id and classroom_id = v_classroom_id;
-
-    -- 根据社团信息，查出社团id
-    SELECT id into v_user_id from users where organization = v_organization and name = v_name and telphone = v_telphone;
-
-    -- 将query_id和user_id和description插入到对应表中
-    INSERT into occupy(query_id,user_id,description) VALUES (v_query_id,v_user_id,v_description);
-
-    -- 事务提交
-    COMMIT;
   END;
 $$
 -- 存储过程定义结束

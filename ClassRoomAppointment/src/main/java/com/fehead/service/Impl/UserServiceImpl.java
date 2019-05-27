@@ -45,13 +45,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserModel> getUser(String organization, String name, String telphone, String description) {
 
+        List<UserModel> userModels = new ArrayList<UserModel>();
+
         UserBean userBean = new UserBean();
         userBean.setOrganization(organization);
         userBean.setName(name);
         userBean.setTelphone(telphone);
         userBean.setDescription(description);
 
-        List<Integer> classrooms = userSelectMapper.selectClassroomsByUser(userBean);
+        //通过社团信息建立子查询获取该社团对应的教室信息
+        List<Integer> query_ids = userSelectMapper.selectClassroomsByUser(userBean);
+
+        if(query_ids.size()==0){
+            return null;
+        }
+
+        //遍历该社团对应的所有教室信息，并创建UserModel，将UserModel加入List<UserModel>中返回给Controller
+        for(Integer query_id:query_ids){
+            System.out.println(query_id);
+            UserSelectBean userSelectBean = new UserSelectBean();
+            userSelectBean.setQuery_id(query_id);
+
+            userSelectMapper.selectUserMessage(userSelectBean);
+
+//            //将userBean中的社团信息赋值给userSelectBean
+//            BeanUtils.copyProperties(userBean,userSelectBean);
+            System.out.println(userSelectBean);
+            UserModel userModel = convertUserModelFromUserSelectBeanAndUserBean(userSelectBean,userBean);
+
+            userModels.add(userModel);
+        }
 
 //        UserSelectBean userSelectBean = new UserSelectBean();
 //        userSelectBean.setOrganization(organization);
@@ -68,18 +91,17 @@ public class UserServiceImpl implements UserService {
 //        }
 //
 //
-//        return userModels;
-        return null;
-
+        return userModels;
     }
 
-    private UserModel convertUserModelFromUserSelectBean(UserSelectBean userSelectBean){
-        if(userSelectBean==null){
+    private UserModel convertUserModelFromUserSelectBeanAndUserBean(UserSelectBean userSelectBean,UserBean userBean){
+        if(userSelectBean==null||userBean==null){
             return null;
         }
 
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(userSelectBean,userModel);
+        BeanUtils.copyProperties(userBean,userModel);
 
         return userModel;
     }

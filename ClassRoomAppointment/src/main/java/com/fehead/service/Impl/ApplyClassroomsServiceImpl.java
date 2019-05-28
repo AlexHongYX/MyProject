@@ -1,5 +1,6 @@
 package com.fehead.service.Impl;
 
+import com.fehead.bean.ClassroomBean;
 import com.fehead.bean.ClassroomInsertBean;
 import com.fehead.dao.ApplyClassroomsMapper;
 import com.fehead.error.BussinessException;
@@ -37,6 +38,23 @@ public class ApplyClassroomsServiceImpl implements ApplyClassroomsService {
         //创建返回Classroom的集合
         List<ClassroomModel> classroomModels = new ArrayList<ClassroomModel>();
 
+        //整体插入之前先做一下整体遍历查询——若有一条记录已存在就直接抛异常，若都正常再进行插入
+        for(String classroom:classrooms){
+            //测试每一个教室是否被占，如果有一个教室被占（被占还要插入）直接抛异常并break
+            ClassroomBean classroomBean = new ClassroomBean();
+            classroomBean.setBuild(build);
+            classroomBean.setBuildlevel(buildlevel);
+            classroomBean.setBuildnumber(buildnumber);
+            classroomBean.setClassroom(Integer.valueOf(classroom));
+            classroomBean.setDay(day);
+            classroomBean.setTime(time);
+            classroomBean.setWeek(week);
+            if(applyClassroomsMapper.selectClassrooms(classroomBean)!=null){
+                throw new BussinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"重复插入");
+            }
+        }
+
+        //整体插入
         for (String classroom : classrooms) {
             //使用创建一个classroomInsertBean的方式：MySQL获得数据库存储过程中的OUT返回的值
             ClassroomInsertBean classroomInsertBean = new ClassroomInsertBean();

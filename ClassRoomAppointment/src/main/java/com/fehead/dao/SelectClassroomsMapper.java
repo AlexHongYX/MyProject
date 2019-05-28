@@ -14,7 +14,10 @@ public interface SelectClassroomsMapper {
     /**
      * 查询某层楼的所有教室，默认usage（使用情况为false）
      */
-    List<ClassroomSelectBean> selectAllClassroomsFromLocation(@Param("build") String build, @Param("buildumber") String buildumber, @Param("buildlevel") int buildlevel);
+    List<ClassroomSelectBean> selectAllClassroomsFromLocation(@Param("build") String build,
+                                                              @Param("buildumber") String buildumber,
+                                                              @Param("buildlevel") int buildlevel);
+
 
     List<ClassroomSelectBean> selectClassroom(@Param("build") String build,
                                         @Param("buildnumber") String buildnumber,

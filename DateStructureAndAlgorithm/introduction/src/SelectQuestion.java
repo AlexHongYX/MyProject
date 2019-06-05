@@ -15,7 +15,8 @@ public class SelectQuestion {
 
         System.out.println("kMax = "+kMax);
     }
-    //先将前k个元素读入数据并以递减的顺序排序，将剩下的元素诸葛读入，当新元素比第k个元素大就将其让在数组正确位置上
+    //先将前k个元素读入数据并以递减的顺序排序，将剩下的元素逐个读入，当新元素比第k个元素大就将其让在数组正确位置上
+    //该方法比上面那个方法好在：当arr的长度非常大时，对一个小的k遍历很多次的时间复杂度更低
 //    public int selectK(int[] arr,int k){
 //        int[] tmp = new int[k];
 //

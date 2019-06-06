@@ -5,14 +5,6 @@
 import java.util.*;
 
 
-class ListNode {
-    int val;
-    ListNode next = null;
-
-    ListNode(int val) {
-        this.val = val;
-    }
-}
 public class ListCut {
     public static ListNode partition(ListNode pHead, int x) {
         // write code here

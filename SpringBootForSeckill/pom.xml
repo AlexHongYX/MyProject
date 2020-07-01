@@ -67,7 +67,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.47</version>
+      <version>8.0.16</version>
     </dependency>
     <!-- 引入druid连接池管理mysql链接-->
     <dependency>
@@ -141,7 +141,7 @@
             <dependency>
               <groupId>mysql</groupId>
               <artifactId>mysql-connector-java</artifactId>
-              <version>5.1.47</version>
+              <version>8.0.16</version>
             </dependency>
           </dependencies>
           <!-- 生成mybatis自动生成器的执行操作-->
